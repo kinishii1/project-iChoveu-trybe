@@ -80,32 +80,26 @@ export function showForecast(forecastList) {
 /**
  * Recebe um objeto com as informações de uma cidade e retorna um elemento HTML
  */
+
 export function createCityElement(cityInfo) {
   const { name, country, temp, condition, icon, url } = cityInfo;
-  const URL = `http://api.weatherapi.com/v1/forecast.json?lang=pt&key=${TOKEN}&q=${url}&days=${DIAS}`
-
+  const URL = `http://api.weatherapi.com/v1/forecast.json?lang=pt&key=${TOKEN}&q=${url}&days=${DIAS}`;
   const cityElement = createElement('li', 'city');
-
   const headingElement = createElement('div', 'city-heading');
   const nameElement = createElement('h2', 'city-name', name);
   const countryElement = createElement('p', 'city-country', country);
   headingElement.appendChild(nameElement);
   headingElement.appendChild(countryElement);
-
   const tempElement = createElement('p', 'city-temp', `${temp}º`);
   const conditionElement = createElement('p', 'city-condition', condition);
-
   const tempContainer = createElement('div', 'city-temp-container');
   tempContainer.appendChild(conditionElement);
   tempContainer.appendChild(tempElement);
-
   const iconElement = createElement('img', 'condition-icon');
   iconElement.src = icon.replace('64x64', '128x128');
-
   const infoContainer = createElement('div', 'city-info-container');
   infoContainer.appendChild(tempContainer);
   infoContainer.appendChild(iconElement);
-
   const buttonContainer = createElement('button', 'city-button');
   buttonContainer.textContent = 'Ver previsão';
   buttonContainer.addEventListener('click', () => {
@@ -114,24 +108,25 @@ export function createCityElement(cityInfo) {
       .then((data) => {
         const forecastList = data.forecast.forecastday.map((forecast) => {
           const { date } = forecast;
-          const { maxtemp_c, mintemp_c, condition, icon } = forecast.day;
+          const {
+            maxtemp_c: maxTemp,
+            mintemp_c: minTemp,
+            condition: conditionForecast,
+          } = forecast.day;
           return {
             date,
-            maxTemp: maxtemp_c,
-            minTemp: mintemp_c,
-            condition: condition.text,
-            icon: condition.icon,
+            maxTemp,
+            minTemp,
+            condition: conditionForecast.text,
+            icon: conditionForecast.icon,
           };
         });
-        console.log(forecastList);
         showForecast(forecastList);
       });
   });
   infoContainer.appendChild(buttonContainer);
-
   cityElement.appendChild(headingElement);
   cityElement.appendChild(infoContainer);
-
   return cityElement;
 }
 
