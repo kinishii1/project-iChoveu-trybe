@@ -11,7 +11,7 @@ export const searchCities = async (city) => {
     if (data.length === 0) {
       throw new Error('Nenhuma cidade encontrada');
     }
-    return data[0];
+    return data;
   } catch (error) {
     window.alert(error.message);
     return [];
@@ -21,8 +21,11 @@ export const searchCities = async (city) => {
 export const getWeatherByCity = async (cityUrl) => {
   //   seu código aqui
   const response = await fetch(`${URL2}${cityUrl}`);
-  const { current } = await response.json();
+  const { current, location } = await response.json();
   return ({
+    url: cityUrl,
+    name: location.name,
+    country: location.country,
     temp: current.temp_c,
     condition: current.condition.text,
     icon: current.condition.icon,
