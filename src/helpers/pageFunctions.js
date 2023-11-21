@@ -1,6 +1,6 @@
 import { getWeatherByCity, searchCities } from './weatherAPI';
 
-const TOKEN = import.meta.env.VITE_TOKEN;
+const TOKEN = '699704b209834aac8ba213451232111';
 const DIAS = 7;
 
 /**

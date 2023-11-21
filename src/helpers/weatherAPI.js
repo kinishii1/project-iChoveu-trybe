@@ -1,5 +1,5 @@
 // Remova os comentários a medida que for implementando as funções
-const TOKEN = import.meta.env.VITE_TOKEN;
+const TOKEN = '699704b209834aac8ba213451232111';
 const URL = `http://api.weatherapi.com/v1/search.json?lang=pt&key=${TOKEN}&q=`;
 const URL2 = `http://api.weatherapi.com/v1/current.json?lang=pt&key=${TOKEN}&q=`;
 
